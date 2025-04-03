@@ -8,7 +8,7 @@ const addMovie = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Movie added successfully',
-            data: movie
+            data: movie,
         })
     } catch (error) {
         res.status(500).json({
@@ -73,7 +73,7 @@ const updateMovie = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Movie updated successfully',
-            data: movie
+            data: movie,
         })
     } catch (error) {
         res.status(500).json({
@@ -95,7 +95,8 @@ const deleteMovie = async (req, res) => {
         }
         res.status(200).json({
             success: true,
-            message: 'Movie deleted successfully'
+            message: 'Movie deleted successfully',
+            data: movie
         })
     } catch (error) {
         res.status(500).json({
