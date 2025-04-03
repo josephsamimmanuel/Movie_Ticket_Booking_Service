@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-const userAuthRouter = require('./routes/usersRoute')
 app.use(express.json())
 const cors = require('cors')
 app.use(cors({
@@ -11,8 +10,12 @@ app.use(cors({
 
 const connectDB = require('./config/database')
 
+const userAuthRouter = require('./routes/usersRoute')
+const movieRouter = require('./routes/moviesRoute')
+
 // Routes
 app.use('/api/users', userAuthRouter)
+app.use('/api/movies', movieRouter)
 
 connectDB().then(() => {
     console.log('Connected to MongoDB...')
