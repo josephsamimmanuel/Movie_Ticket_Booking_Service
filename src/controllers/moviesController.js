@@ -5,10 +5,12 @@ const addMovie = async (req, res) => {
     try {
         const movie = new Movie(req.body)
         await movie.save()
+        const movieList = await Movie.find()
         res.status(200).json({
             success: true,
             message: 'Movie added successfully',
             data: movie,
+            movieList: movieList
         })
     } catch (error) {
         res.status(500).json({
@@ -64,6 +66,7 @@ const updateMovie = async (req, res) => {
             req.body,
             { new: true }
         )
+        const movieList = await Movie.find()
         if (!movie) {
             return res.status(404).json({
                 success: false,
@@ -74,6 +77,7 @@ const updateMovie = async (req, res) => {
             success: true,
             message: 'Movie updated successfully',
             data: movie,
+            movieList: movieList
         })
     } catch (error) {
         res.status(500).json({
@@ -87,6 +91,7 @@ const updateMovie = async (req, res) => {
 const deleteMovie = async (req, res) => {
     try {
         const movie = await Movie.findByIdAndDelete(req.params.id)
+        const movieList = await Movie.find()
         if (!movie) {
             return res.status(404).json({
                 success: false,
@@ -96,7 +101,8 @@ const deleteMovie = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Movie deleted successfully',
-            data: movie
+            data: movie,
+            movieList: movieList
         })
     } catch (error) {
         res.status(500).json({

@@ -20,6 +20,15 @@ const theatreSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+    },
+    isActive: {
+        type: Boolean,
+        default: false
+    },
+    status: {
+        type: String,
+        enum: ['Pending', 'Accepted', 'Rejected'],
+        default: 'Pending'
     }
 }, {timestamps: true})
 
