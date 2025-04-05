@@ -27,7 +27,10 @@ const showSchema = new mongoose.Schema({
     },
     availableSeats: {
         type: Number,
-        required: true
+    },
+    bookedSeats: {
+        type: Array,
+        default: []
     },
     theatre: {
         type: mongoose.Schema.Types.ObjectId,

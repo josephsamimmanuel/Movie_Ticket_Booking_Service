@@ -3,9 +3,10 @@ const showsRouter = express.Router()
 const Show = require('../models/showsModel')
 const { userAuth } = require('../middleware/auth')
 
+// add shows
 showsRouter.post('/add-shows', userAuth, async (req, res) => {
     try {
-        const { showName, showTime, date, movie, ticketPrice, totalSeats, availableSeats, theatreId } = req.body
+        const { showName, showTime, date, movie, ticketPrice, totalSeats, bookedSeats, theatreId } = req.body
         
         // Create the show document
         const show = new Show({ 
@@ -15,7 +16,7 @@ showsRouter.post('/add-shows', userAuth, async (req, res) => {
             movie, 
             ticketPrice, 
             totalSeats, 
-            availableSeats, 
+            bookedSeats,
             theatre: theatreId 
         })
         
@@ -71,7 +72,7 @@ showsRouter.get('/get-shows-by-theatre/:theatreId', userAuth, async (req, res) =
 
 showsRouter.put('/edit-show/:showId', userAuth, async (req, res) => {
     try {
-        const { showName, showTime, date, movie, ticketPrice, totalSeats, availableSeats, theatreId } = req.body
+        const { showName, showTime, date, movie, ticketPrice, totalSeats, bookedSeats, theatreId } = req.body
         const showId = req.params.showId
 
         const updatedShow = await Show.findByIdAndUpdate(showId, {
@@ -81,7 +82,7 @@ showsRouter.put('/edit-show/:showId', userAuth, async (req, res) => {
             movie,
             ticketPrice,
             totalSeats,
-            availableSeats,
+            bookedSeats,
             theatre: theatreId
         }, { new: true })
 

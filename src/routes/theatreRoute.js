@@ -2,6 +2,7 @@ const express = require('express')
 const theatreRouter = express.Router()
 const Theatre = require('../models/theatreModel')
 const { userAuth } = require('../middleware/auth')
+const Show = require('../models/showsModel')
 
 // Add a new theatre
 theatreRouter.post('/add-theatre', userAuth, async (req, res) => {
@@ -123,6 +124,52 @@ theatreRouter.put('/ignore-theatre/:id', userAuth, async (req, res) => {
         })
     } catch (error) {
         res.status(500).json({ message: error.message })
+    }
+})
+
+// get all unique theatres which have shows for a movie on a given date
+theatreRouter.get('/get-all-unique-theatres-for-a-movie/:movieId/:date', userAuth, async (req, res) => {
+    try {
+        const { movieId, date } = req.params
+
+        // find all shows for a movie on a given date
+        const shows = await Show.find({ movie: movieId, date: date }).populate('theatre')
+        console.log('shows', shows)
+
+        // Create a map to store theatre objects with their shows
+        const theatreMap = new Map()
+
+        // Process each show and organize by theatre
+        shows.forEach(show => {
+            const theatreId = show.theatre._id.toString()
+
+            if (!theatreMap.has(theatreId)) {
+                // Create a new theatre object with shows array inside it
+                const theatreObj = {
+                    ...show.theatre.toObject(),
+                    shows: [show]
+                }
+                theatreMap.set(theatreId, theatreObj)
+            } else {
+                // Add show to existing theatre's shows array
+                theatreMap.get(theatreId).shows.push(show)
+            }
+        })
+
+        // Convert map to array of theatre objects
+        const theatresWithShows = Array.from(theatreMap.values())
+        console.log('theatresWithShows', theatresWithShows)
+
+        res.status(200).json({
+            success: true,
+            message: 'Theatres fetched successfully',
+            data: theatresWithShows
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to fetch theatres'
+        })
     }
 })
 

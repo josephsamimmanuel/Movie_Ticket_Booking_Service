@@ -26,6 +26,7 @@ const getAllMovies = async (req, res) => {
         const movies = await Movie.find()
         res.status(200).json({
             success: true,
+            message: 'Movies fetched successfully',
             data: movies
         })
     } catch (error) {
@@ -48,6 +49,7 @@ const getMovieById = async (req, res) => {
         }
         res.status(200).json({
             success: true,
+            message: 'Movie fetched successfully',
             data: movie
         })
     } catch (error) {
