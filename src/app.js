@@ -13,11 +13,13 @@ const connectDB = require('./config/database')
 const userAuthRouter = require('./routes/usersRoute')
 const movieRouter = require('./routes/moviesRoute')
 const theatreRouter = require('./routes/theatreRoute')
+const showsRouter = require('./routes/showsRoute')
 
 // Routes
 app.use('/api/users', userAuthRouter)
 app.use('/api/movies', movieRouter)
 app.use('/api/theatres', theatreRouter)
+app.use('/api/shows', showsRouter)
 
 connectDB().then(() => {
     console.log('Connected to MongoDB...')
