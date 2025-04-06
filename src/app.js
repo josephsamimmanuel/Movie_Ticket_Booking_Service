@@ -3,8 +3,9 @@ const app = express()
 require('dotenv').config()
 app.use(express.json())
 const cors = require('cors')
+const BASE_URL = process.env.BASE_URL
 app.use(cors({
-    origin: 'http://localhost:5173',  // Removed trailing slash
+    origin: BASE_URL,  // Removed trailing slash
     credentials: true
 }))
 
