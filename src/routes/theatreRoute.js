@@ -173,4 +173,17 @@ theatreRouter.get('/get-all-unique-theatres-for-a-movie/:movieId/:date', userAut
     }
 })
 
+// get show details by show id
+theatreRouter.get('/get-show-details/:showId/:date', userAuth, async (req, res) => {
+    try {
+        const show = await Show.findById(req.params.showId).populate('movie').populate('theatre')
+        res.status(200).json({
+            success: true,
+            message: 'Show details fetched successfully',
+            data: show
+        })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
 module.exports = theatreRouter
