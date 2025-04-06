@@ -112,7 +112,7 @@ theatreRouter.put('/accept-theatre/:id', userAuth, async (req, res) => {
     }
 })
 
-// Ignore a theatre
+// Ignore a theatre //
 theatreRouter.put('/ignore-theatre/:id', userAuth, async (req, res) => {
     const { isActive } = req.body
     try {
