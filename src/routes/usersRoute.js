@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { userAuth } = require('../middleware/auth')
 require('dotenv').config()
-const secretJWT = process.env.SECRET_JWT
+const secretJWT = process.env.JWT_SECRET
 
 // Register a new user
 userAuthRouter.post('/register', async (req, res) => {

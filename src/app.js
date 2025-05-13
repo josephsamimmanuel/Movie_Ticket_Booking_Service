@@ -5,7 +5,7 @@ app.use(express.json())
 const cors = require('cors')
 const BASE_URL = process.env.BASE_URL
 app.use(cors({
-    origin: BASE_URL,  // Removed trailing slash
+    origin: 'http://localhost:5173',  // Removed trailing slash
     credentials: true
 }))
 
@@ -23,7 +23,6 @@ app.use('/api/theatres', theatreRouter)
 app.use('/api/shows', showsRouter)
 
 connectDB().then(() => {
-    console.log('Connected to MongoDB...')
     app.listen(process.env.PORT, () => {
         console.log(`Server is running on port ${process.env.PORT}...`)
     })

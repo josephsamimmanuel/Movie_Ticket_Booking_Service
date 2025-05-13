@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 require('dotenv').config()
-const JWT_SECRET = process.env.SECRET_JWT
+const JWT_SECRET = process.env.JWT_SECRET
 
 const userAuth = async (req, res, next) => {
     try {
