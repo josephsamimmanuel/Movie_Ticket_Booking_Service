@@ -37,6 +37,23 @@ const getAllMovies = async (req, res) => {
     }
 }
 
+// AutoSearch by movie name
+const autoSearch = async (req, res) => {
+    try {
+        const movies = await Movie.find({ title: { $regex: req.params.name, $options: 'i' } })
+        res.status(200).json({
+            success: true,
+            message: 'Movies fetched successfully',
+            data: movies
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 // Get movie by id
 const getMovieById = async (req, res) => {
     try {
@@ -119,5 +136,6 @@ module.exports = {
     getAllMovies,
     getMovieById,
     updateMovie,
-    deleteMovie
+    deleteMovie,
+    autoSearch
 } 
